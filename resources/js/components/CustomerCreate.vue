@@ -27,7 +27,7 @@
               <q-input v-model="customer.postal_code" label="PLZ" dense required />
             </div>
             <div class="col-12 col-md-6">
-              <q-input v-model="customer.city" label="Stadt" dense required />
+              <q-input v-model="customer.city" label="Ort" dense required />
             </div>
           </div>
           <div class="q-mt-md">

@@ -3,7 +3,7 @@
     <q-card>
       <q-card-section>
         <div class="row items-center justify-between">
-          <div class="text-h6">Kundenliste</div>
+          <div class="text-h6">Kundenverwaltung</div>
           <q-btn flat label="Kunden hinzufügen" color="primary" @click="addCustomer" />
         </div>
         <q-input v-model="search" placeholder="Suchen nach ID, Name oder E-Mail" dense outlined class="q-mt-md" />
