@@ -52,11 +52,6 @@ This project is a customer management system built with Laravel for the backend 
     docker-compose up --build
     ```
 
-2. Run the database migrations inside the Docker container:
-    ```sh
-    docker-compose exec app php artisan migrate
-    ```
-
 ### Quasar Setup
 
 1. Install Quasar CLI globally:
