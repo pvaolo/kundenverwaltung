@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md bg-light-gray text-black">
+  <q-page class="q-pa-md bg-soft-blue text-primary">
     <q-card>
       <q-card-section>
         <div class="text-h6">Create Customer</div>
@@ -7,15 +7,33 @@
       <q-separator />
       <q-card-section>
         <q-form @submit.prevent="createCustomer">
-          <q-input v-model="customer.first_name" label="First Name" required />
-          <q-input v-model="customer.last_name" label="Last Name" required />
-          <q-input v-model="customer.email" label="Email" type="email" required />
-          <q-input v-model="customer.phone" label="Phone" required />
-          <q-input v-model="customer.street" label="Street" required />
-          <q-input v-model="customer.postal_code" label="Postal Code" required />
-          <q-input v-model="customer.city" label="City" required />
-          <q-btn type="submit" label="Save" color="primary" />
-          <q-btn flat label="Cancel" color="primary" @click="goBack" />
+          <div class="row q-col-gutter-md">
+            <div class="col-12 col-md-6">
+              <q-input v-model="customer.first_name" label="First Name" dense required />
+            </div>
+            <div class="col-12 col-md-6">
+              <q-input v-model="customer.last_name" label="Last Name" dense required />
+            </div>
+            <div class="col-12 col-md-6">
+              <q-input v-model="customer.email" label="Email" type="email" dense required />
+            </div>
+            <div class="col-12 col-md-6">
+              <q-input v-model="customer.phone" label="Phone" dense required />
+            </div>
+            <div class="col-12 col-md-6">
+              <q-input v-model="customer.street" label="Street" dense required />
+            </div>
+            <div class="col-12 col-md-6">
+              <q-input v-model="customer.postal_code" label="Postal Code" dense required />
+            </div>
+            <div class="col-12 col-md-6">
+              <q-input v-model="customer.city" label="City" dense required />
+            </div>
+          </div>
+          <div class="q-mt-md">
+            <q-btn type="submit" label="Save" color="primary" />
+            <q-btn flat label="Cancel" color="primary" @click="goBack" />
+          </div>
         </q-form>
       </q-card-section>
     </q-card>

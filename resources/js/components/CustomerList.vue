@@ -20,7 +20,6 @@
           <template v-slot:body-cell-actions="props">
             <q-td :props="props">
               <q-btn flat icon="edit" @click="editCustomer(props.row.id)" color="primary" />
-              <q-btn flat icon="delete" @click="deleteCustomer(props.row.id)" color="negative" />
             </q-td>
           </template>
           <template v-slot:no-data>
@@ -29,11 +28,24 @@
         </q-table>
       </q-card-section>
     </q-card>
+
+    <q-dialog v-model="deleteDialog">
+      <q-card>
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">Delete this customer?</span>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Delete" color="negative" @click="deleteCustomer" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
 import axios from 'axios';
+import CustomerModel from '../models/CustomerModel';
 
 export default {
   name: 'CustomerList',
@@ -41,10 +53,11 @@ export default {
     return {
       customers: [],
       search: '',
+      deleteDialog: false,
+      deleteCustomerId: null,
       columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
-        { name: 'first_name', label: 'First Name', field: 'first_name', align: 'left' },
-        { name: 'last_name', label: 'Last Name', field: 'last_name', align: 'left' },
+        { name: 'name', label: 'Name', field: row => `${row.last_name}, ${row.first_name}`, align: 'left' },
         { name: 'email', label: 'Email', field: 'email', align: 'left' },
         { name: 'actions', label: 'Actions', field: 'actions', align: 'right' }
       ]
@@ -52,14 +65,7 @@ export default {
   },
   computed: {
     filteredCustomers() {
-      return this.customers.filter(customer => {
-        return (
-          customer.id.toString().includes(this.search) ||
-          customer.first_name.toLowerCase().includes(this.search.toLowerCase()) ||
-          customer.last_name.toLowerCase().includes(this.search.toLowerCase()) ||
-          customer.email.toLowerCase().includes(this.search.toLowerCase())
-        );
-      });
+      return CustomerModel.filterCustomers(this.customers, this.search);
     }
   },
   created() {
@@ -67,25 +73,24 @@ export default {
   },
   methods: {
     fetchCustomers() {
-      axios.get('/api/customers')
-        .then(response => {
-          if (response.headers['content-type'].includes('application/json')) {
-            this.customers = response.data;
-          } else {
-            console.warn('Unexpected response format:', response.data);
-            this.customers = [];
-          }
+      CustomerModel.fetchCustomers()
+        .then(customers => {
+          this.customers = customers;
         })
         .catch(error => {
-          console.error('Error fetching customers:', error.response ? error.response.data : error.message);
+          console.error('Error fetching customers:', error);
           this.customers = [];
         });
     },
     editCustomer(id) {
       this.$router.push(`/customers/${id}/edit`);
     },
-    deleteCustomer(id) {
-      axios.delete(`/api/customers/${id}`)
+    confirmDelete(id) {
+      this.deleteCustomerId = id;
+      this.deleteDialog = true;
+    },
+    deleteCustomer() {
+      CustomerModel.deleteCustomer(this.deleteCustomerId)
         .then(() => {
           this.fetchCustomers();
         })

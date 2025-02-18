@@ -1,26 +1,7 @@
 <template>
-  <div id="app" class="bg-light-gray">
+  <div id="app" class="bg-soft-blue">
     <MainLayout>
-      <q-drawer show-if-above v-model="drawer" side="left" bordered>
-        <q-list>
-          <q-item to="/" clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="home" />
-            </q-item-section>
-            <q-item-section>
-              Home
-            </q-item-section>
-          </q-item>
-          <q-item to="/customers" clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="people" />
-            </q-item-section>
-            <q-item-section>
-              Customers
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-drawer>
+      <!-- Removed q-drawer component -->
       <q-page-container>
         <router-view></router-view>
       </q-page-container>
@@ -46,7 +27,27 @@ export default {
 
 <style>
 /* Add any global styles here */
-.bg-light-gray {
-  background-color: #f5f5f5;
+.bg-soft-blue {
+  background-color: #e0fae4; /* Soft blue */
+}
+
+.text-primary {
+  color: #000000; /* Primary text color */
+}
+
+.text-secondary {
+  color: #004d40; /* Secondary text color */
+}
+
+.q-btn {
+  border-radius: 8px; /* Softer button corners */
+}
+
+.q-card {
+  border-radius: 12px; /* Softer card corners */
+}
+
+.q-input {
+  border-radius: 8px; /* Softer input corners */
 }
 </style>

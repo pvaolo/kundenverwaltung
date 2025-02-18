@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md q-gutter-md bg-light-gray text-black">
+  <q-page class="q-pa-md q-gutter-md bg-soft-blue text-primary">
     <q-table :rows="customers" :columns="columns">
       <template v-slot:body-cell-name="props">
         <q-td :props="props">

@@ -1,31 +1,47 @@
 <template>
-  <q-page class="q-pa-md bg-light-gray text-black">
+  <q-page class="q-pa-md q-gutter-md bg-soft-blue">
     <q-card>
       <q-card-section>
         <div class="row items-center justify-between">
           <div class="text-h6">Customer Details</div>
           <div class="q-gutter-sm">
-            <q-btn flat icon="edit" color="primary" @click="editCustomer" />
+            <q-btn flat icon="edit" color="primary" @click="editCustomer" class="q-mr-sm" />
             <q-btn flat icon="delete" color="negative" @click="confirmDelete" />
           </div>
         </div>
       </q-card-section>
       <q-separator />
       <q-card-section>
-        <div class="q-gutter-y-md">
-          <div><strong>First Name:</strong> {{ customer.first_name }}</div>
-          <div><strong>Last Name:</strong> {{ customer.last_name }}</div>
-          <div><strong>Email:</strong> {{ customer.email }}</div>
-          <div><strong>Phone:</strong> {{ customer.phone }}</div>
-          <div><strong>Street:</strong> {{ customer.street }}</div>
-          <div><strong>Postal Code:</strong> {{ customer.postal_code }}</div>
-          <div><strong>City:</strong> {{ customer.city }}</div>
+        <div class="row q-col-gutter-md">
+          <div class="col-12 col-md-6">
+            <div><strong>ID:</strong> {{ customer.id }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div><strong>First Name:</strong> {{ customer.first_name }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div><strong>Last Name:</strong> {{ customer.last_name }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div><strong>Email:</strong> {{ customer.email }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div><strong>Phone:</strong> {{ customer.phone }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div><strong>Street:</strong> {{ customer.street }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div><strong>Postal Code:</strong> {{ customer.postal_code }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div><strong>City:</strong> {{ customer.city }}</div>
+          </div>
+        </div>
+        <div class="q-mt-md text-center">
+          <q-btn flat label="Back to List" color="primary" @click="goBack" />
         </div>
       </q-card-section>
-      <q-separator />
-      <q-card-actions>
-        <q-btn flat label="Back to List" color="primary" @click="goBack" />
-      </q-card-actions>
     </q-card>
 
     <q-dialog v-model="deleteDialog">
