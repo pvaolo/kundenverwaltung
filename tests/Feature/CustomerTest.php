@@ -16,8 +16,6 @@ class CustomerControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(3);
-
-        echo "testIndex passed\n";
     }
 
     public function testShow()
@@ -37,8 +35,6 @@ class CustomerControllerTest extends TestCase
             'postal_code' => $customer->postal_code,
             'city' => $customer->city,
         ]);
-
-        echo "testShow passed\n";
     }
 
     public function testStore()
@@ -57,8 +53,6 @@ class CustomerControllerTest extends TestCase
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('customers', $data);
-
-        echo "testStore passed\n";
     }
 
     public function testUpdate()
@@ -79,8 +73,6 @@ class CustomerControllerTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('customers', $data);
-
-        echo "testUpdate passed\n";
     }
 
     public function testDestroy()
@@ -91,8 +83,6 @@ class CustomerControllerTest extends TestCase
 
         $response->assertStatus(204);
         $this->assertDatabaseMissing('customers', ['id' => $customer->id]);
-
-        echo "testDestroy passed\n";
     }
 
     public function testInvalidStore()
@@ -111,7 +101,5 @@ class CustomerControllerTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['first_name', 'last_name', 'email', 'phone', 'street', 'postal_code', 'city']);
-
-        echo "testInvalidStore passed\n";
     }
 }
