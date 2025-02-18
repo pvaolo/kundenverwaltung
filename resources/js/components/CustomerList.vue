@@ -11,9 +11,10 @@
       <q-separator />
       <q-card-section>
         <q-table
-          :rows="paginatedCustomers"
+          :rows="filteredCustomers"
           :columns="columns"
           row-key="id"
+          :rows-per-page-options="[5, 10, 20]"
           @row-click="onRowClick"
         >
           <template v-slot:body-cell-actions="props">
@@ -26,15 +27,6 @@
             <div class="text-center">No data available</div>
           </template>
         </q-table>
-        <q-pagination
-          v-if="pagesNumber > 1"
-          v-model="pagination.page"
-          :max="pagesNumber"
-          class="q-mt-md"
-          boundary-numbers
-          size="lg"
-          color="primary"
-        />
       </q-card-section>
     </q-card>
   </q-page>
@@ -55,23 +47,10 @@ export default {
         { name: 'last_name', label: 'Last Name', field: 'last_name', align: 'left' },
         { name: 'email', label: 'Email', field: 'email', align: 'left' },
         { name: 'actions', label: 'Actions', field: 'actions', align: 'right' }
-      ],
-      pagination: {
-        page: 1,
-        rowsPerPage: 10,
-        rowsNumber: 0
-      }
+      ]
     }
   },
   computed: {
-    pagesNumber() {
-      return Math.ceil(this.pagination.rowsNumber / this.pagination.rowsPerPage);
-    },
-    paginatedCustomers() {
-      const start = (this.pagination.page - 1) * this.pagination.rowsPerPage;
-      const end = start + this.pagination.rowsPerPage;
-      return this.customers.slice(start, end);
-    },
     filteredCustomers() {
       return this.customers.filter(customer => {
         return (
@@ -92,17 +71,14 @@ export default {
         .then(response => {
           if (response.headers['content-type'].includes('application/json')) {
             this.customers = response.data;
-            this.pagination.rowsNumber = response.data.length;
           } else {
             console.warn('Unexpected response format:', response.data);
             this.customers = [];
-            this.pagination.rowsNumber = 0;
           }
         })
         .catch(error => {
           console.error('Error fetching customers:', error.response ? error.response.data : error.message);
           this.customers = [];
-          this.pagination.rowsNumber = 0;
         });
     },
     editCustomer(id) {

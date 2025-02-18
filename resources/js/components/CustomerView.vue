@@ -22,6 +22,7 @@
           <div><strong>City:</strong> {{ customer.city }}</div>
         </div>
       </q-card-section>
+      <q-separator />
       <q-card-actions>
         <q-btn flat label="Back to List" color="primary" @click="goBack" />
       </q-card-actions>
