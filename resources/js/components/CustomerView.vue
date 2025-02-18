@@ -1,8 +1,9 @@
 <template>
   <q-page class="q-pa-md">
     <q-card>
-      <q-card-section>
+      <q-card-section class="row justify-between items-center">
         <div class="text-h6">Kundendetails</div>
+        <div class="text-caption q-mr-md">ID: <span class="text-body1">{{ customer.id }}</span></div>
       </q-card-section>
       <q-separator />
       <q-card-section>
@@ -62,17 +63,33 @@
           <div class="col-12 col-md-6">
             <q-item>
               <q-item-section>
-                <q-item-label class="text-caption">Stadt</q-item-label>
+                <q-item-label class="text-caption">Ort</q-item-label>
                 <q-item-label class="text-body1">{{ customer.city }}</q-item-label>
               </q-item-section>
             </q-item>
           </div>
         </div>
-        <div class="q-mt-md">
+        <div class="q-mt-md row justify-between">
           <q-btn flat label="Zurück" color="primary" @click="goBack" />
+          <div>
+            <q-btn flat icon="edit" color="primary" @click="editCustomer" />
+            <q-btn flat icon="delete" color="negative" @click="confirmDelete" />
+          </div>
         </div>
       </q-card-section>
     </q-card>
+
+    <q-dialog v-model="deleteDialog">
+      <q-card>
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">Möchten Sie diesen Eintrag wirklich löschen?</span>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Abbrechen" color="primary" v-close-popup />
+          <q-btn flat label="Löschen" color="negative" @click="deleteCustomer" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -85,6 +102,7 @@ export default {
   name: 'CustomerView',
   setup() {
     const customer = ref({});
+    const deleteDialog = ref(false);
     const router = useRouter();
     const route = useRoute();
 
@@ -101,11 +119,32 @@ export default {
       router.push('/customers');
     };
 
+    const editCustomer = () => {
+      router.push(`/customers/${customer.value.id}/edit`);
+    };
+
+    const confirmDelete = () => {
+      deleteDialog.value = true;
+    };
+
+    const deleteCustomer = async () => {
+      try {
+        await axios.delete(`/api/customers/${customer.value.id}`);
+        router.push('/customers');
+      } catch (error) {
+        console.error('Error deleting customer:', error);
+      }
+    };
+
     fetchCustomer();
 
     return {
       customer,
-      goBack
+      deleteDialog,
+      goBack,
+      editCustomer,
+      confirmDelete,
+      deleteCustomer
     };
   }
 };
