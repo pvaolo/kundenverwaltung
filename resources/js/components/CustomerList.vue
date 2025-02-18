@@ -3,10 +3,10 @@
     <q-card>
       <q-card-section>
         <div class="row items-center justify-between">
-          <div class="text-h6">Customer List</div>
-          <q-btn flat label="Add Customer" color="primary" @click="addCustomer" />
+          <div class="text-h6">Kundenliste</div>
+          <q-btn flat label="Kunden hinzufügen" color="primary" @click="addCustomer" />
         </div>
-        <q-input v-model="search" placeholder="Search by ID, Name, or Email" dense outlined class="q-mt-md" />
+        <q-input v-model="search" placeholder="Suchen nach ID, Name oder E-Mail" dense outlined class="q-mt-md" />
       </q-card-section>
       <q-separator />
       <q-card-section>
@@ -14,7 +14,7 @@
           :rows="filteredCustomers"
           :columns="columns"
           row-key="id"
-          :rows-per-page-options="[5, 10, 20]"
+          :rows-per-page-options="[5, 10, 15, 20]"
           @row-click="onRowClick"
         >
           <template v-slot:body-cell-actions="props">
@@ -23,7 +23,7 @@
             </q-td>
           </template>
           <template v-slot:no-data>
-            <div class="text-center">No data available</div>
+            <div class="text-center">Keine Daten verfügbar</div>
           </template>
         </q-table>
       </q-card-section>
@@ -32,11 +32,11 @@
     <q-dialog v-model="deleteDialog">
       <q-card>
         <q-card-section class="row items-center">
-          <span class="q-ml-sm">Delete this customer?</span>
+          <span class="q-ml-sm">Möchten Sie diesen Eintrag löschen?</span>
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Delete" color="negative" @click="deleteCustomer" v-close-popup />
+          <q-btn flat label="Abbrechen" color="primary" v-close-popup />
+          <q-btn flat label="Löschen" color="negative" @click="deleteCustomer" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -59,7 +59,7 @@ export default {
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
         { name: 'name', label: 'Name', field: row => `${row.last_name}, ${row.first_name}`, align: 'left' },
         { name: 'email', label: 'Email', field: 'email', align: 'left' },
-        { name: 'actions', label: 'Actions', field: 'actions', align: 'right' }
+        { name: 'actions', label: '', field: 'actions', align: 'right' }
       ]
     }
   },

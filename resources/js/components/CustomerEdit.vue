@@ -2,37 +2,37 @@
   <q-page class="q-pa-md bg-soft-blue text-primary">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Edit Customer</div>
+        <div class="text-h6">Kunde bearbeiten</div>
       </q-card-section>
       <q-separator />
       <q-card-section>
         <q-form @submit.prevent="updateCustomer">
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
-              <q-input v-model="customer.first_name" label="First Name" required />
+              <q-input v-model="customer.first_name" label="Vorname" required />
             </div>
             <div class="col-12 col-md-6">
-              <q-input v-model="customer.last_name" label="Last Name" required />
+              <q-input v-model="customer.last_name" label="Nachname" required />
             </div>
             <div class="col-12 col-md-6">
               <q-input v-model="customer.email" label="Email" type="email" required />
             </div>
             <div class="col-12 col-md-6">
-              <q-input v-model="customer.phone" label="Phone" required />
+              <q-input v-model="customer.phone" label="Telefon" required />
             </div>
             <div class="col-12 col-md-6">
-              <q-input v-model="customer.street" label="Street" required />
+              <q-input v-model="customer.street" label="Staße, Hausnummer" required />
             </div>
             <div class="col-12 col-md-6">
-              <q-input v-model="customer.postal_code" label="Postal Code" required />
+              <q-input v-model="customer.postal_code" label="PLZ" required />
             </div>
             <div class="col-12 col-md-6">
-              <q-input v-model="customer.city" label="City" required />
+              <q-input v-model="customer.city" label="Stadt" required />
             </div>
           </div>
           <div class="q-mt-md">
-            <q-btn type="submit" label="Save" color="primary" />
-            <q-btn flat label="Cancel" color="primary" @click="goBack" />
+            <q-btn type="submit" label="Speichern" color="primary" />
+            <q-btn flat label="Abbrechen" color="primary" @click="goBack" />
           </div>
         </q-form>
       </q-card-section>
