@@ -1,0 +1,9 @@
+@import 'quasar/src/css/index.sass';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your CSS code here */
+body {
+    font-family: Arial, sans-serif;
+}
