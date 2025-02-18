@@ -2,8 +2,11 @@
   <q-page class="q-pa-md q-gutter-md bg-light-gray text-black">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Customer List</div>
-        <q-btn flat label="Add Customer" color="primary" @click="addCustomer" />
+        <div class="row items-center justify-between">
+          <div class="text-h6">Customer List</div>
+          <q-btn flat label="Add Customer" color="primary" @click="addCustomer" />
+        </div>
+        <q-input v-model="search" placeholder="Search by ID, Name, or Email" dense outlined class="q-mt-md" />
       </q-card-section>
       <q-separator />
       <q-card-section>
@@ -11,16 +14,12 @@
           :rows="paginatedCustomers"
           :columns="columns"
           row-key="id"
-          :pagination.sync="pagination"
-          :rows-per-page-options="[5, 10, 20, 50]"
           @row-click="onRowClick"
         >
           <template v-slot:body-cell-actions="props">
             <q-td :props="props">
               <q-btn flat icon="edit" @click="editCustomer(props.row.id)" color="primary" />
-              <q-btn flat @click="deleteCustomer(props.row.id)" color="negative">
-                <span class="material-icons">delete</span>
-              </q-btn>
+              <q-btn flat icon="delete" @click="deleteCustomer(props.row.id)" color="negative" />
             </q-td>
           </template>
           <template v-slot:no-data>
@@ -28,6 +27,7 @@
           </template>
         </q-table>
         <q-pagination
+          v-if="pagesNumber > 1"
           v-model="pagination.page"
           :max="pagesNumber"
           class="q-mt-md"
@@ -48,6 +48,7 @@ export default {
   data() {
     return {
       customers: [],
+      search: '',
       columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
         { name: 'first_name', label: 'First Name', field: 'first_name', align: 'left' },
@@ -70,6 +71,16 @@ export default {
       const start = (this.pagination.page - 1) * this.pagination.rowsPerPage;
       const end = start + this.pagination.rowsPerPage;
       return this.customers.slice(start, end);
+    },
+    filteredCustomers() {
+      return this.customers.filter(customer => {
+        return (
+          customer.id.toString().includes(this.search) ||
+          customer.first_name.toLowerCase().includes(this.search.toLowerCase()) ||
+          customer.last_name.toLowerCase().includes(this.search.toLowerCase()) ||
+          customer.email.toLowerCase().includes(this.search.toLowerCase())
+        );
+      });
     }
   },
   created() {
@@ -98,7 +109,7 @@ export default {
       this.$router.push(`/customers/${id}/edit`);
     },
     deleteCustomer(id) {
-      axios.delete(`/api/customers/${id}`)  // Changed from /customers/ to /api/customers/
+      axios.delete(`/api/customers/${id}`)
         .then(() => {
           this.fetchCustomers();
         })
@@ -137,5 +148,11 @@ export default {
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'liga';
+}
+
+.q-pagination .q-btn.dropdown-toggle::after {
+  content: "\f107"; /* Unicode for the down arrow icon */
+  font-family: "Font Awesome 5 Free"; /* Ensure you have Font Awesome included */
+  font-weight: 900;
 }
 </style>
